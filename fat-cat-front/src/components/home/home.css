@@ -1,0 +1,57 @@
+.timer {
+  font-size: 64px;
+}
+
+.reports-btn, .clock-in-btn {
+  letter-spacing: 1px;
+  border: none;
+  outline: none;
+  box-shadow: none !important;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.reports-btn {
+  color: white;
+  background-color: gray;
+  border: none;
+}
+
+.clock-in-btn {
+  color: white;
+  background-color: #41c468;
+}
+
+.reports-btn:active, .reports-btn:focus, .reports-btn:hover {
+  color: black;
+  background-color: rgb(204, 204, 204);
+}
+
+.help-text {
+  font-size: 14px;
+  text-align: center;
+}
+
+.clock-in-btn:active, .clock-in-btn:focus, .clock-in-btn:hover {
+  color: white;
+  background-color: rgb(14, 105, 2);
+}
+
+.active-clock {
+  color: #41c468 !important;
+  background-color: rgb(49, 49, 44) !important;
+}
+
+.active-clock:hover {
+  background-color: #df4759 !important;
+  color: white !important;
+}
+
+.red {
+  color: red !important;
+}
+
+.total-time{
+  font-weight: 500;
+}
