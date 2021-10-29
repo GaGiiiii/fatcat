@@ -34,7 +34,7 @@ const Home: React.FC = () => {
             <Row>
               <Col>
                 <div className="mt-3">
-                  <h6 className='text-justify total-time'>Total time spent today: <span className='fw-bold'>{`${TimerContextVar.totalTimeSpent && getHoursG(TimerContextVar.totalTimeSpent)}h ${getMinutesG(TimerContextVar.totalTimeSpent!)}m`}</span></h6>
+                  <h6 className='text-justify total-time'>Total time spent today: <span className='fw-bold'>{`${getHoursG(TimerContextVar.totalTimeSpent !== undefined ? TimerContextVar.totalTimeSpent : 0)}h ${getMinutesG(TimerContextVar.totalTimeSpent !== undefined ? TimerContextVar.totalTimeSpent : 0)}m`}</span></h6>
                 </div>
                 <Timer />
                 <div className='mt-5'>
