@@ -5,10 +5,15 @@ import Timer from './Timer';
 import { getHoursG, getMinutesG } from '../../Helpers';
 import { Header } from '../header/Header';
 import { Link } from 'react-router-dom';
-import { TimerContext } from '../../App';
+import { Report, TimerContext } from '../../App';
 
-const Home: React.FC = () => {
-  const [reports, setReports] = useState([]);
+interface Props {
+  reports: Report[],
+  setReports: React.Dispatch<React.SetStateAction<Report[]>>
+}
+
+
+const Home: React.FC<Props> = ({ reports, setReports }) => {
   const TimerContextVar = useContext(TimerContext);
 
   function handleClockIn(): void {
@@ -18,6 +23,16 @@ const Home: React.FC = () => {
       }, 10);
       TimerContextVar.setIntervalID!(intervalIDParam);
     } else {
+      // Add Report
+      let report: Report = {
+        id: Math.floor(Math.random() * 10000),
+        user_id: 1,
+        created_at: new Date(),
+        finished_at: new Date(),
+      }
+      let reportsC = [...reports];
+      reportsC.push(report);
+      setReports(reportsC);
       clearInterval(TimerContextVar.intervalID!);
       TimerContextVar.setTotalTimeSpent!(prev => prev + TimerContextVar.timeSpent!);
       TimerContextVar.setTimeSpent!(0);
@@ -29,7 +44,7 @@ const Home: React.FC = () => {
     <Container fluid className='g-0'>
       <Row>
         <Col>
-          <Header />
+          <Header currentPage='home' />
           <Container>
             <Row>
               <Col>

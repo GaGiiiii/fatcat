@@ -1,0 +1,11 @@
+.arrow-back a {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white !important;
+}
+
+.arrow-back a:hover {
+  color: #41c468 !important;
+}

@@ -3,9 +3,15 @@ import { Container } from 'react-bootstrap';
 import hero from '../../images/hero.png'; // with import
 import heroActive from '../../images/hero-active.png'; // with import
 import { TimerContext } from '../../App';
+import { FaArrowLeft } from "react-icons/fa";
+import './header.css';
+import { Link } from 'react-router-dom';
 
+interface Props {
+  currentPage: string
+}
 
-export const Header: React.FC = () => {
+export const Header: React.FC<Props> = ({ currentPage }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const TimerContextVar = useContext(TimerContext);
 
@@ -20,7 +26,12 @@ export const Header: React.FC = () => {
 
   return (
     <>
-      <div>
+      <div style={{ position: 'relative' }}>
+        {currentPage === 'reports' && <div className="arrow-back">
+          <Link to="/">
+            <FaArrowLeft />
+          </Link>
+        </div>}
         <img className='w-100' src={TimerContextVar.clockActive ? heroActive : hero} alt="" />
       </div>
       <Container className='mt-5'>

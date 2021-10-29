@@ -16,6 +16,13 @@ interface TimerContextTypes {
   setIntervalID: React.Dispatch<React.SetStateAction<number>>
 }
 
+export interface Report {
+  id: number,
+  user_id: number,
+  created_at: Date,
+  finished_at: Date,
+}
+
 export const TimerContext = React.createContext<Partial<TimerContextTypes>>({});
 
 function App() {
@@ -23,16 +30,17 @@ function App() {
   const [intervalID, setIntervalID] = useState<number>(0);
   const [timeSpent, setTimeSpent] = useState<number>(0);
   const [clockActive, setClockActive] = useState<boolean>(false);
+  const [reports, setReports] = useState<Report[]>([]);
 
   return (
     <TimerContext.Provider value={{ timeSpent, setTimeSpent, totalTimeSpent, setTotalTimeSpent, clockActive, setClockActive, intervalID, setIntervalID }}>
       <Router>
         <Switch>
           <Route path="/reports">
-            <Reports />
+            <Reports reports={reports} />
           </Route>
           <Route path="/">
-            <Home />
+            <Home reports={reports} setReports={setReports} />
           </Route>
         </Switch>
       </Router>
