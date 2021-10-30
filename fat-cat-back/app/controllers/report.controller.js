@@ -1,3 +1,4 @@
+const { sequelize } = require("../models");
 const db = require("../models");
 const Report = db.reports;
 const Op = db.Sequelize.Op;
@@ -36,16 +37,25 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  Report.findAll()
-    .then(data => {
-      res.send(data);
-    })
-    .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving reports."
-      });
+  sequelize.query('SELECT * FROM `reports` r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -1 DAY) ORDER BY createdAt DESC', null, { raw: true }).then(data => {
+    res.send(data[0]);
+  }).catch(err => {
+    res.status(500).send({
+      message:
+        err.message || "Some error occurred while retrieving reports."
     });
+  });
+
+  // Report.findAll()
+  //   .then(data => {
+  //     res.send(data);
+  //   })
+  //   .catch(err => {
+  //     res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while retrieving reports."
+  //     });
+  //   });
 };
 
 // Find a single Tutorial with an id

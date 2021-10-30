@@ -52,7 +52,7 @@ function App() {
       });
       setReports(reportsG);
     }).catch(err => console.log(err));
-  }, [api]);
+  }, []);
 
   return (
     <ApiContext.Provider value={api}>
