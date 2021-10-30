@@ -20,6 +20,7 @@ const ReportTable: React.FC<Props> = ({ reports, forDate }) => {
 
     helpG = helpG.filter((report: Report) => new Date(report.createdAt).getDate() === dayG && new Date(report.createdAt).getMonth() === monthG && new Date(report.createdAt).getFullYear() === yearG);
     setReportsToShow(helpG);
+    console.log(helpG);
   }, [reports, forDate]);
 
   return (
