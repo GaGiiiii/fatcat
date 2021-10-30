@@ -1,20 +1,23 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Col, Container, Row, Button } from 'react-bootstrap'
 import './home.css';
 import Timer from './Timer';
 import { getHoursG, getMinutesG } from '../../Helpers';
 import { Header } from '../header/Header';
 import { Link } from 'react-router-dom';
-import { Report, TimerContext } from '../../App';
+import { ApiContext, Report, TimerContext } from '../../App';
+import axios from 'axios';
 
 interface Props {
   reports: Report[],
   setReports: React.Dispatch<React.SetStateAction<Report[]>>
+  activeReport?: Partial<Report>,
+  setActiveReport?: React.Dispatch<React.SetStateAction<Partial<Report>>>
 }
 
-
-const Home: React.FC<Props> = ({ reports, setReports }) => {
+const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveReport }) => {
   const TimerContextVar = useContext(TimerContext);
+  const api = useContext(ApiContext);
 
   function handleClockIn(): void {
     if (!TimerContextVar.clockActive) {
@@ -22,20 +25,37 @@ const Home: React.FC<Props> = ({ reports, setReports }) => {
         TimerContextVar.setTimeSpent!(prev => prev + 1);
       }, 10);
       TimerContextVar.setIntervalID!(intervalIDParam);
+      axios.post(`${api}/reports`, { UserId: 1 }).then(response => {
+        console.log(response.data);
+        let report: Report = {
+          id: response.data.id,
+          UserId: response.data.UserId,
+          createdAt: response.data.createdAt,
+          updatedAt: response.data.updatedAt,
+        }
+        setActiveReport!(report);
+      }).catch((error) => {
+        console.log(error);
+      });
     } else {
-      // Add Report
-      let report: Report = {
-        id: Math.floor(Math.random() * 10000),
-        user_id: 1,
-        created_at: new Date(),
-        finished_at: new Date(),
-      }
-      let reportsC = [...reports];
-      reportsC.push(report);
-      setReports(reportsC);
-      clearInterval(TimerContextVar.intervalID!);
-      TimerContextVar.setTotalTimeSpent!(prev => prev + TimerContextVar.timeSpent!);
-      TimerContextVar.setTimeSpent!(0);
+      axios.put(`${api}/reports/${activeReport!.id}`, { UserId: 1 }).then(response => {
+        console.log(response.data);
+        // Add Report
+        let report: Report = {
+          id: response.data.id,
+          UserId: response.data.UserId,
+          createdAt: response.data.createdAt,
+          updatedAt: response.data.updatedAt,
+        }
+        let reportsC = [...reports];
+        reportsC.push(report);
+        setReports(reportsC);
+        clearInterval(TimerContextVar.intervalID!);
+        TimerContextVar.setTotalTimeSpent!(prev => prev + TimerContextVar.timeSpent!);
+        TimerContextVar.setTimeSpent!(0);
+      }).catch((error) => {
+        console.log(error);
+      });
     }
     TimerContextVar.setClockActive!(prev => !prev);
   }
