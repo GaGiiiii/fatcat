@@ -5,6 +5,7 @@ import "bootswatch/dist/sandstone/bootstrap.min.css";
 import Home from './components/home/Home';
 import Reports from './components/reports/Reports';
 import axios from 'axios';
+import { totalTimeSpentToday } from './Helpers';
 
 interface TimerContextTypes {
   timeSpent: number,
@@ -71,11 +72,15 @@ function App() {
         setActiveReport(rr);
         let intervalIDParam = window.setInterval(() => {
           setTimeSpent(prev => prev + 1);
-        }, 1000 * 60);
+        }, 1000);
         setIntervalID!(intervalIDParam);
       }
     }).catch(err => console.log(err));
   }, []);
+
+  useEffect(() => {
+    setTotalTimeSpent(() => totalTimeSpentToday(reports));
+  }, [reports]);
 
   return (
     <ApiContext.Provider value={api}>

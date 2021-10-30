@@ -17,3 +17,22 @@ export function getSecondsG(timeSpent: number): string {
 export function calculateDiff(report: Report): number {
   return (new Date(report.updatedAt).getTime() - new Date(report.createdAt).getTime()) / 1000;
 }
+
+export function totalTimeSpentToday(reports: Report[]): number {
+  let total = 0;
+
+  reports.forEach((report: Report) => {
+    if (isToday(new Date(report.updatedAt))) {
+      total += calculateDiff(report);
+    }
+  });
+
+  return total;
+}
+
+export function isToday(someDate: Date): boolean {
+  const today = new Date();
+  return someDate.getDate() === today.getDate() &&
+    someDate.getMonth() === today.getMonth() &&
+    someDate.getFullYear() === today.getFullYear();
+}

@@ -10,7 +10,6 @@ interface Props {
 
 const ReportTableRow: React.FC<Props> = ({ report, setTotalTime }) => {
   const diff = useMemo(() => calculateDiff(report), [report]);
-  console.log("DIFF: " + diff);
 
   useEffect(() => {
     setTotalTime(prev => prev + diff);

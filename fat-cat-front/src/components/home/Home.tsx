@@ -21,9 +21,10 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
 
   function handleClockIn(): void {
     if (!TimerContextVar.clockActive) {
+      console.log("AAA")
       let intervalIDParam = window.setInterval(() => {
         TimerContextVar.setTimeSpent!(prev => prev + 1);
-      }, 1000 * 60);
+      }, 1000);
       TimerContextVar.setIntervalID!(intervalIDParam);
       axios.post(`${api}/reports`, { UserId: 1 }).then(response => {
         console.log(response.data);
