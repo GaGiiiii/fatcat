@@ -3,7 +3,10 @@ const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
 
-// Retrieve all Tutorials from the database.
+// getReports =============================================================================
+/*
+If days query param is provided we will return reports from last x days, if not we will return all reports
+*/
 exports.getReports = (req, res) => {
   if (req.query.days) {
     sequelize.query(`SELECT * FROM reports r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -${req.query.days} DAY) AND UserId = 1 ORDER BY createdAt ASC`, null, { raw: true }).then(data => {
@@ -24,16 +27,6 @@ exports.getReports = (req, res) => {
       });
     });
   }
-
-  // Report.findAll()
-  //   .then(data => {
-  //     res.send(data);
-  //   })
-  //   .catch(err => {
-  //     res.status(500).send({
-  //       message:
-  //         err.message || "Some error occurred while retrieving reports."
-  //     });
-  //   });
 };
+// getReports =============================================================================
 

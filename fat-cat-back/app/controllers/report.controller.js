@@ -3,7 +3,7 @@ const db = require("../models");
 const Report = db.reports;
 const Op = db.Sequelize.Op;
 
-// Create and Save a new Tutorial
+// Create Report =============================================================================
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.UserId) {
@@ -13,16 +13,12 @@ exports.create = (req, res) => {
     return;
   }
 
-  // Create a Tutorial
   const report = {
     UserId: req.body.UserId,
-    date: new Date().toLocaleString('en-US', { timeZone: 'Europe/Belgrade' }),
+    date: new Date().toLocaleString('en-US', { timeZone: 'Europe/Belgrade' }), // Should be removed, we have created_at
     // date: new Date(),
   };
 
-  console.log(report.date);
-
-  // Save Tutorial in the database
   Report.create(report)
     .then(data => {
       res.send(data);
@@ -34,36 +30,29 @@ exports.create = (req, res) => {
       });
     });
 };
+// Create Report =============================================================================
 
-// Retrieve all Tutorials from the database.
+// Find All =============================================================================
 exports.findAll = (req, res) => {
-  sequelize.query('SELECT * FROM `reports` r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -1 DAY) ORDER BY createdAt ASC', null, { raw: true }).then(data => {
-    res.send(data[0]);
-  }).catch(err => {
-    res.status(500).send({
-      message:
-        err.message || "Some error occurred while retrieving reports."
+  Report.findAll()
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Some error occurred while retrieving reports."
+      });
     });
-  });
-
-  // Report.findAll()
-  //   .then(data => {
-  //     res.send(data);
-  //   })
-  //   .catch(err => {
-  //     res.status(500).send({
-  //       message:
-  //         err.message || "Some error occurred while retrieving reports."
-  //     });
-  //   });
 };
+// Find All =============================================================================
 
 // Find a single Tutorial with an id
 exports.findOne = (req, res) => {
 
 };
 
-// Update a Tutorial by the id in the request
+// Update Report =============================================================================
 exports.update = async (req, res) => {
   const id = req.params.id;
 
@@ -76,18 +65,4 @@ exports.update = async (req, res) => {
   report.save();
   res.send(report);
 };
-
-// Delete a Tutorial with the specified id in the request
-exports.delete = (req, res) => {
-
-};
-
-// Delete all Tutorials from the database.
-exports.deleteAll = (req, res) => {
-
-};
-
-// Find all published Tutorials
-exports.findAllPublished = (req, res) => {
-
-};
+// Update Report =============================================================================

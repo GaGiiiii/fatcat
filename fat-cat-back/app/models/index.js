@@ -17,14 +17,17 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
 });
 
 const db = {};
-
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
+// Models =============================================================================
 db.reports = require("./report.model")(sequelize, Sequelize);
 db.users = require("./user.model")(sequelize, Sequelize);
+// Models =============================================================================
 
+// Relationships =============================================================================
 db.users.hasMany(db.reports);
 db.reports.belongsTo(db.users);
+// Relationships =============================================================================
 
 module.exports = db;
