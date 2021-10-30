@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Report } from '../../App'
-import { getHoursG, getMinutesG } from '../../Helpers';
+import { getHoursG, getMinutesG, isToday } from '../../Helpers';
 import ReportTableRow from './ReportTableRow';
 
 interface Props {
@@ -14,13 +14,8 @@ const ReportTable: React.FC<Props> = ({ reports, forDate }) => {
 
   useEffect(() => {
     let helpG = [...reports];
-    let dayG = forDate.getDate();
-    let monthG = forDate.getMonth();
-    let yearG = forDate.getFullYear();
-
-    helpG = helpG.filter((report: Report) => new Date(report.createdAt).getDate() === dayG && new Date(report.createdAt).getMonth() === monthG && new Date(report.createdAt).getFullYear() === yearG);
+    helpG = helpG.filter((report: Report) => isToday(new Date(report.createdAt)));
     setReportsToShow(helpG);
-    console.log(helpG);
   }, [reports, forDate]);
 
   return (
