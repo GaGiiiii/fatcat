@@ -12,6 +12,7 @@ const ReportTable: React.FC<Props> = ({ reports, forDate }) => {
   const [reportsToShow, setReportsToShow] = useState<Report[]>([]);
   const [totalTime, setTotalTime] = useState<number>(0);
 
+  /* We only want to show reports for selected date */
   useEffect(() => {
     let helpG = [...reports];
     helpG = helpG.filter((report: Report) => isToday(new Date(report.createdAt)));

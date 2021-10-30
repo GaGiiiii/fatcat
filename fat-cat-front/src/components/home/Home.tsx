@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { Col, Container, Row, Button } from 'react-bootstrap'
 import './home.css';
 import Timer from './Timer';
@@ -19,48 +19,60 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
   const TimerContextVar = useContext(TimerContext);
   const api = useContext(ApiContext);
 
+  const startTimer = useCallback((): void => {
+    let intervalIDParam: number = window.setInterval(() => {
+      TimerContextVar.setTimeSpent!(prev => prev + 1);
+    }, 1000);
+    TimerContextVar.setIntervalID!(intervalIDParam);
+  }, [TimerContextVar.setIntervalID, TimerContextVar.setTimeSpent]);
+
+  const saveReport = useCallback((): void => {
+    axios.post(`${api}/reports`, { UserId: 1 }).then(response => {
+      let report: Report = {
+        id: response.data.id,
+        UserId: response.data.UserId,
+        createdAt: response.data.createdAt,
+        updatedAt: response.data.updatedAt,
+      }
+      setActiveReport!(report);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, [api, setActiveReport]);
+
+  const updateReport = useCallback((): void => {
+    axios.put(`${api}/reports/${activeReport!.id}`, { UserId: 1 }).then(response => {
+      let report: Report = {
+        id: response.data.id,
+        UserId: response.data.UserId,
+        createdAt: response.data.createdAt,
+        updatedAt: response.data.updatedAt,
+      }
+      /* 
+        When We Reload Page Report Will Exist In Array So We Don't Need to Add It Again, We Just Need To Update It
+      */
+      let reportsC = [...reports];
+      let foundIndex = reportsC.findIndex(r => r.id === activeReport!.id);
+      if (foundIndex === -1) {
+        reportsC.push(report);
+      } else {
+        reportsC[foundIndex] = report;
+      }
+      setReports(reportsC);
+      clearInterval(TimerContextVar.intervalID!);
+      TimerContextVar.setTotalTimeSpent!(prev => prev + TimerContextVar.timeSpent!);
+      TimerContextVar.setTimeSpent!(0);
+    }).catch((error) => {
+      console.log(error);
+    });
+  }, [TimerContextVar.intervalID, TimerContextVar.setTimeSpent, TimerContextVar.setTotalTimeSpent, TimerContextVar.timeSpent, activeReport, api, reports, setReports]);
+
   function handleClockIn(): void {
     if (!TimerContextVar.clockActive) {
-      console.log("AAA")
-      let intervalIDParam = window.setInterval(() => {
-        TimerContextVar.setTimeSpent!(prev => prev + 1);
-      }, 1000);
-      TimerContextVar.setIntervalID!(intervalIDParam);
-      axios.post(`${api}/reports`, { UserId: 1 }).then(response => {
-        console.log(response.data);
-        let report: Report = {
-          id: response.data.id,
-          UserId: response.data.UserId,
-          createdAt: response.data.createdAt,
-          updatedAt: response.data.updatedAt,
-        }
-        setActiveReport!(report);
-      }).catch((error) => {
-        console.log(error);
-      });
+      startTimer();
+      saveReport();
     } else {
-      axios.put(`${api}/reports/${activeReport!.id}`, { UserId: 1 }).then(response => {
-        // Add Report
-        let report: Report = {
-          id: response.data.id,
-          UserId: response.data.UserId,
-          createdAt: response.data.createdAt,
-          updatedAt: response.data.updatedAt,
-        }
-        let reportsC = [...reports];
-        let foundIndex = reportsC.findIndex(r => r.id === activeReport!.id);
-        if (foundIndex === -1) {
-          reportsC.push(report);
-        } else {
-          reportsC[foundIndex] = report;
-        }
-        setReports(reportsC);
-        clearInterval(TimerContextVar.intervalID!);
-        TimerContextVar.setTotalTimeSpent!(prev => prev + TimerContextVar.timeSpent!);
-        TimerContextVar.setTimeSpent!(0);
-      }).catch((error) => {
-        console.log(error);
-      });
+      updateReport();
     }
     TimerContextVar.setClockActive!(prev => !prev);
   }

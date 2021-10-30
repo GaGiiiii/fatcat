@@ -14,6 +14,9 @@ export function getSecondsG(timeSpent: number): string {
   return ('0' + Math.floor(timeSpent % 60)).slice(-2);
 }
 
+/* 
+  Difference in seconds between 2 dates.
+*/
 export function calculateDiff(report: Report): number {
   return (new Date(report.updatedAt).getTime() - new Date(report.createdAt).getTime()) / 1000;
 }
@@ -32,6 +35,7 @@ export function totalTimeSpentToday(reports: Report[]): number {
 
 export function isToday(someDate: Date): boolean {
   const today = new Date();
+  
   return someDate.getDate() === today.getDate() &&
     someDate.getMonth() === today.getMonth() &&
     someDate.getFullYear() === today.getFullYear();

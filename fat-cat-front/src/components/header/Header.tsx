@@ -15,6 +15,7 @@ export const Header: React.FC<Props> = ({ currentPage }) => {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const TimerContextVar = useContext(TimerContext);
 
+  /* Clock */
   useEffect(() => {
     let intervalIDParam: number = window.setInterval(() => {
       setCurrentDate(new Date());
