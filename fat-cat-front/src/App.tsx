@@ -36,11 +36,9 @@ function App() {
   const [activeReport, setActiveReport] = useState<Partial<Report>>({});
   const [reports, setReports] = useState<Report[]>([]);
 
-
   useEffect(() => {
-    axios.get(`${api}/reports`).then(res => {
+    axios.get(`${api}/users/1/reports?days=2`).then(res => {
       let reportsG: Report[] = [];
-      console.log(res.data)
       res.data.forEach((report: Report): void => {
         let reportG = {
           id: report.id,
@@ -51,6 +49,31 @@ function App() {
         reportsG.push(reportG);
       });
       setReports(reportsG);
+    }).catch(err => console.log(err));
+
+    axios.get(`${api}/users/1/reports`).then(res => {
+      let reportsG: Report[] = [];
+      res.data.forEach((report: Report): void => {
+        let reportG = {
+          id: report.id,
+          UserId: report.UserId,
+          createdAt: report.createdAt,
+          updatedAt: report.updatedAt
+        }
+        reportsG.push(reportG);
+      });
+
+      let rr = reportsG.find(r => r.createdAt === r.updatedAt);
+
+      if (rr !== undefined) {
+        setClockActive(true);
+        setTimeSpent((new Date().getTime() - new Date(rr.createdAt).getTime()) / 1000);
+        setActiveReport(rr);
+        let intervalIDParam = window.setInterval(() => {
+          setTimeSpent(prev => prev + 1);
+        }, 1000 * 60);
+        setIntervalID!(intervalIDParam);
+      }
     }).catch(err => console.log(err));
   }, []);
 

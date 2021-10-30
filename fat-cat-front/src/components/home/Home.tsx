@@ -23,7 +23,7 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
     if (!TimerContextVar.clockActive) {
       let intervalIDParam = window.setInterval(() => {
         TimerContextVar.setTimeSpent!(prev => prev + 1);
-      }, 10);
+      }, 1000 * 60);
       TimerContextVar.setIntervalID!(intervalIDParam);
       axios.post(`${api}/reports`, { UserId: 1 }).then(response => {
         console.log(response.data);
@@ -39,7 +39,6 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
       });
     } else {
       axios.put(`${api}/reports/${activeReport!.id}`, { UserId: 1 }).then(response => {
-        console.log(response.data);
         // Add Report
         let report: Report = {
           id: response.data.id,
@@ -48,7 +47,12 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
           updatedAt: response.data.updatedAt,
         }
         let reportsC = [...reports];
-        reportsC.push(report);
+        let foundIndex = reportsC.findIndex(r => r.id === activeReport!.id);
+        if (foundIndex === -1) {
+          reportsC.push(report);
+        } else {
+          reportsC[foundIndex] = report;
+        }
         setReports(reportsC);
         clearInterval(TimerContextVar.intervalID!);
         TimerContextVar.setTotalTimeSpent!(prev => prev + TimerContextVar.timeSpent!);

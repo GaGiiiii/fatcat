@@ -37,7 +37,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Tutorials from the database.
 exports.findAll = (req, res) => {
-  sequelize.query('SELECT * FROM `reports` r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -1 DAY) ORDER BY createdAt DESC', null, { raw: true }).then(data => {
+  sequelize.query('SELECT * FROM `reports` r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -1 DAY) ORDER BY createdAt ASC', null, { raw: true }).then(data => {
     res.send(data[0]);
   }).catch(err => {
     res.status(500).send({

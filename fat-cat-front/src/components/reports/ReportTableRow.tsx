@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo } from 'react'
 import { Report } from '../../App'
-import { calculateDiff, getHoursG, getMinutesG } from '../../Helpers';
+import { calculateDiff, getHoursG, getMinutesG, getSecondsG } from '../../Helpers';
 
 interface Props {
   report: Report,
@@ -10,6 +10,7 @@ interface Props {
 
 const ReportTableRow: React.FC<Props> = ({ report, setTotalTime }) => {
   const diff = useMemo(() => calculateDiff(report), [report]);
+  console.log("DIFF: " + diff);
 
   useEffect(() => {
     setTotalTime(prev => prev + diff);
@@ -18,7 +19,7 @@ const ReportTableRow: React.FC<Props> = ({ report, setTotalTime }) => {
   return (
     <div className='report-item text-muted'>
       <span className='start-end'>{`${('0' + new Date(report.createdAt).getHours()).slice(-2)}:${('0' + new Date(report.createdAt).getMinutes()).slice(-2)} - ${('0' + new Date(report.updatedAt).getHours()).slice(-2)}:${('0' + new Date(report.updatedAt).getMinutes()).slice(-2)}`}</span>
-      <span className='diff'>{`${getHoursG(diff)}h ${getMinutesG(diff)}m`}</span>
+      <span className='diff'>{`${getHoursG(diff)}h ${getMinutesG(diff)}m (${getSecondsG(diff)}s)`}</span>
     </div>
   )
 }
