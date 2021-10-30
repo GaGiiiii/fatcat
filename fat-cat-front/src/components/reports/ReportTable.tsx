@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Report } from '../../App'
-import { getHoursG, getMinutesG, isToday } from '../../Helpers';
+import { getHoursG, getMinutesG } from '../../Helpers';
 import ReportTableRow from './ReportTableRow';
 
 interface Props {
@@ -12,10 +12,14 @@ const ReportTable: React.FC<Props> = ({ reports, forDate }) => {
   const [reportsToShow, setReportsToShow] = useState<Report[]>([]);
   const [totalTime, setTotalTime] = useState<number>(0);
 
-  /* We only want to show reports for selected date */
+  /* We Only Want To Show Reports For Selected Day */
   useEffect(() => {
     let helpG = [...reports];
-    helpG = helpG.filter((report: Report) => isToday(new Date(report.createdAt)));
+    let dayG = forDate.getDate();
+    let monthG = forDate.getMonth();
+    let yearG = forDate.getFullYear();
+
+    helpG = helpG.filter((report: Report) => new Date(report.createdAt).getDate() === dayG && new Date(report.createdAt).getMonth() === monthG && new Date(report.createdAt).getFullYear() === yearG);
     setReportsToShow(helpG);
   }, [reports, forDate]);
 
