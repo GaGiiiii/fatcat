@@ -78,12 +78,12 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
   }
 
   return (
-    <Container fluid className='g-0'>
+    <Container fluid className='px-0' style={{ overflowX: 'hidden' }}>
       <Row>
         <Col>
           <Header currentPage='home' />
           <Container>
-            <Row>
+            <Row className=''>
               <Col>
                 <div className="mt-3">
                   <h6 className='text-justify total-time'>Total time spent today: <span className='fw-bold'>{`${getHoursG(TimerContextVar.totalTimeSpent !== undefined ? TimerContextVar.totalTimeSpent : 0)}h ${getMinutesG(TimerContextVar.totalTimeSpent !== undefined ? TimerContextVar.totalTimeSpent : 0)}m`}</span></h6>

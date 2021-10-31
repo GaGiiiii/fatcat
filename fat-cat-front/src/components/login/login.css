@@ -1,0 +1,71 @@
+.login-container {
+  background-color: #202630;
+  height: 100vh;
+}
+
+.header-auth-h2 {
+  letter-spacing: 2px;
+  color: white;
+}
+
+.auth-form label {
+  font-weight: 500;
+  text-transform: uppercase;
+  font-size: 15px;
+  letter-spacing: 1px;
+}
+
+.auth-form input, .auth-form input:active, .auth-form input:focus {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  border-bottom: 2px solid #909398;
+  border-radius: 0;
+  box-shadow: none;
+  color: white;
+}
+
+.auth-form input::placeholder {
+  /* Chrome, Firefox, Opera, Safari 10.1+ */
+  font-style: italic;
+}
+
+.auth-form input:-ms-input-placeholder {
+  /* Internet Explorer 10-11 */
+  font-style: italic;
+}
+
+.auth-form input::-ms-input-placeholder {
+  /* Microsoft Edge */
+  font-style: italic;
+}
+
+.auth-form button {
+  text-transform: uppercase;
+  color: white;
+  letter-spacing: 1.5px;
+  background-color: #086646;
+  border: none;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  border-radius: 10px;
+}
+
+.auth-form .su-span {
+  color: #06c081;
+  text-decoration: underline;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.auth-error, .auth-error .form-text {
+  color: #c8292a;
+}
+
+.auth-success {
+  color: #06c081;
+}
+
+.auth-form .auth-success input {
+  border-bottom-color: #06c081;
+}

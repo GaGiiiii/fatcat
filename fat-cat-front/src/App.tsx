@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootswatch/dist/sandstone/bootstrap.min.css";
 import Home from './components/home/Home';
 import Reports from './components/reports/Reports';
+import Login from './components/login/Login';
 import axios from 'axios';
 import { totalTimeSpentToday } from './Helpers';
 
@@ -103,6 +104,9 @@ function App() {
           <Switch>
             <Route path="/reports">
               <Reports reports={reports} />
+            </Route>
+            <Route path="/login">
+              <Login />
             </Route>
             <Route path="/">
               <Home reports={reports} setReports={setReports} activeReport={activeReport} setActiveReport={setActiveReport} />
