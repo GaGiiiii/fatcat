@@ -24,7 +24,7 @@ export const Header: React.FC<Props> = ({ currentPage }) => {
   useEffect(() => {
     let intervalIDParam: number = window.setInterval(() => {
       setCurrentDate(new Date());
-    }, 60000); // 1 second * 60 = 1 minute
+    }, 60000); // 1 second * 60 = 1 minute We need to lower this to seconds if we want perfect Sync!!!
     return () => {
       clearInterval(intervalIDParam);
     }
@@ -46,6 +46,7 @@ export const Header: React.FC<Props> = ({ currentPage }) => {
         </div>}
         <div className='logout-doors' onClick={handleLogout}>
           <GiExitDoor />
+          {/* HERE WE CAN PUT SIGN OUT TEXT BUT DOORS ARE CUTER :) */}
         </div>
         <img className='w-100' src={TimerContextVar.clockActive ? heroActive : hero} alt="" />
       </div>
