@@ -130,7 +130,7 @@ function App() {
           <Router>
             <Switch>
               <Route path="/reports">
-                <Reports reports={reports} />
+                {currentUser ? <Reports reports={reports} /> : <Redirect to='/login' />}
               </Route>
               <Route path="/login">
                 {!currentUser ? <Login /> : <Redirect to='/' />}
