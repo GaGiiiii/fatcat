@@ -19,6 +19,8 @@ const Login: React.FC = () => {
   const [passwordError, setPasswordError] = useState<boolean>(false);
   const [passwordColor, setPasswordColor] = useState<String>("");
 
+  const [wrongCombination, setWrongCombination] = useState<boolean>(false);
+
   const api = useContext(ApiContext);
   const { setCurrentUser } = useContext(CurrentUserContext);
 
@@ -38,6 +40,7 @@ const Login: React.FC = () => {
       history.push('/'); // Redirect
     }).catch((error) => {
       console.log(error);
+      setWrongCombination(true);
     });
   }
 
@@ -79,6 +82,7 @@ const Login: React.FC = () => {
           <Container className='mt-5'>
             <Row>
               <Col>
+                {wrongCombination && <h6 className='text-center text-danger mb-4'>Wrong Combination</h6>}
                 <Form className='text-white auth-form' onSubmit={handleLogin}>
                   <Form.Group className={`mb-4 ${emailColor}`} controlId="formBasicEmail">
                     <Form.Label>Email</Form.Label>
