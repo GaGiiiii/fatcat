@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 30, 2021 at 08:04 PM
+-- Generation Time: Oct 31, 2021 at 06:06 PM
 -- Server version: 10.4.18-MariaDB
 -- PHP Version: 8.0.3
 
@@ -40,17 +40,10 @@ CREATE TABLE `reports` (
 --
 
 INSERT INTO `reports` (`id`, `date`, `createdAt`, `updatedAt`, `UserId`) VALUES
-(2, '2021-10-30 14:13:57', '2021-10-29 14:13:57', '2021-10-29 14:13:59', 1),
-(3, '2021-10-30 14:14:59', '2021-10-29 14:14:59', '2021-10-29 14:15:07', 1),
-(6, '2021-10-30 14:15:46', '2021-10-28 14:15:46', '2021-10-28 14:15:48', 1),
-(7, '2021-10-30 14:29:36', '2021-10-27 14:29:36', '2021-10-27 14:29:37', 1),
-(8, '2021-10-30 14:29:37', '2021-10-27 14:29:37', '2021-10-27 14:29:42', 1),
-(10, '2021-10-30 14:29:47', '2021-10-29 14:29:47', '2021-10-29 14:29:51', 1),
-(56, '2021-10-30 19:06:32', '2021-10-30 19:06:32', '2021-10-30 19:08:22', 1),
-(57, '2021-10-30 19:09:20', '2021-10-30 19:09:20', '2021-10-30 19:11:00', 1),
-(58, '2021-10-30 19:21:35', '2021-10-30 19:21:35', '2021-10-30 19:22:44', 1),
-(61, '2021-10-30 19:58:36', '2021-10-30 19:58:36', '2021-10-30 19:58:57', 1),
-(62, '2021-10-30 19:59:06', '2021-10-30 19:59:06', '2021-10-30 19:59:10', 1);
+(1, '2021-10-31 15:53:41', '2021-10-31 15:53:41', '2021-10-31 15:53:43', 1),
+(2, '2021-10-31 18:22:53', '2021-10-31 18:22:53', '2021-10-31 18:23:01', 1),
+(3, '2021-10-31 18:23:06', '2021-10-31 18:23:06', '2021-10-31 18:23:18', 1),
+(4, '2021-10-31 18:26:07', '2021-10-31 18:26:07', '2021-10-31 18:28:37', 1);
 
 -- --------------------------------------------------------
 
@@ -62,7 +55,7 @@ CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
-  `username` varchar(255) DEFAULT NULL,
+  `fullname` varchar(255) DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -71,8 +64,8 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `email`, `password`, `username`, `createdAt`, `updatedAt`) VALUES
-(1, 'gagi@gagi.com', 'gagi', 'gagi', '2021-10-30 14:13:47', '2021-10-30 14:13:47');
+INSERT INTO `users` (`id`, `email`, `password`, `fullname`, `createdAt`, `updatedAt`) VALUES
+(1, 'gagi@gagi.com', 'gagii', 'gagi gagic', '2021-10-31 14:40:18', '2021-10-31 14:40:18');
 
 --
 -- Indexes for dumped tables
@@ -99,7 +92,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=63;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `users`
