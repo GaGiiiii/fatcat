@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 db.sequelize.sync({ force: false }); // Force true restarts DB
 
 // Routes ================================================================================
+require('./app/routes/global.routes')(app);
 require('./app/routes/report.routes')(app);
 require('./app/routes/user.routes')(app);
 // Routes ================================================================================

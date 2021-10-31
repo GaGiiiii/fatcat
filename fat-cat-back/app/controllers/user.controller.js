@@ -2,6 +2,8 @@ const { sequelize } = require("../models");
 const db = require("../models");
 const User = db.users;
 const Op = db.Sequelize.Op;
+const jwt = require('jsonwebtoken');
+
 
 // getReports =============================================================================
 /*
@@ -29,4 +31,46 @@ exports.getReports = (req, res) => {
   }
 };
 // getReports =============================================================================
+
+// login =============================================================================
+exports.login = async (req, res) => {
+  const email = req.body.email;
+  const password = req.body.password;
+
+  if (!email || !password) {
+    return res.status(401).json({
+      user: null,
+      message: 'Wrong combination'
+    });
+  }
+
+  try {
+    const user = (await User.findAll({
+      where: {
+        email: email,
+        password: password,
+      },
+    }))[0];
+
+    if (user) {
+      const token = jwt.sign({ user }, 'secretkey');
+      res.status(200).json({
+        user,
+        token,
+        message: 'Login Success'
+      });
+    } else {
+      return res.status(401).json({
+        user: null,
+        message: 'Wrong combination'
+      });
+    }
+  } catch (err) {
+    return res.status(500).json({
+      user: null,
+      message: err.message
+    });
+  }
+};
+// login =============================================================================
 
