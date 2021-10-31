@@ -26,9 +26,9 @@ const ReportTable: React.FC<Props> = ({ reports, forDate }) => {
   return (
     <div className='mb-5'>
       <h6><span className='fw-bold'>Time report for {forDate.toLocaleDateString('en-US', { weekday: 'long' })},</span><span className='text-muted'> {`${forDate.getDate()} ${forDate.toLocaleDateString('en-US', { month: 'short' })}:`}</span></h6>
-      {reportsToShow.length > 0 && reportsToShow.map(report => (
+      {reportsToShow.length > 0 ? reportsToShow.map(report => (
         <ReportTableRow key={report.id} report={report} setTotalTime={setTotalTime} />
-      ))}
+      )) : 'No reports for this day'}
       <h6 className='mt-2 fw-bold d-flex justify-content-between'><span>Total:</span><span>{`${getHoursG(totalTime)}h ${getMinutesG(totalTime)}m`}</span></h6>
     </div>
   )

@@ -12,20 +12,24 @@ If days query param is provided we will return reports from last x days, if not 
 exports.getReports = (req, res) => {
   if (req.query.days) {
     sequelize.query(`SELECT * FROM reports r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -${req.query.days} DAY) AND UserId = 1 ORDER BY createdAt ASC`, null, { raw: true }).then(data => {
-      res.send(data[0]);
+      return res.status(200).json({
+        reports: data[0],
+        message: "Reports found"
+      });
     }).catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving reports."
+      return res.status(500).json({
+        message: err.message || "Some error occurred while retrieving reports."
       });
     });
   } else {
     sequelize.query('SELECT * FROM `reports` r WHERE UserId = 1 ORDER BY createdAt ASC', null, { raw: true }).then(data => {
-      res.send(data[0]);
+      return res.status(200).json({
+        reports: data[0],
+        message: "Reports found"
+      });
     }).catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving reports."
+      res.status(500).json({
+        message: err.message || "Some error occurred while retrieving reports."
       });
     });
   }

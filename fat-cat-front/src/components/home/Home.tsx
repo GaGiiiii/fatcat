@@ -29,10 +29,10 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
   const saveReport = useCallback((): void => {
     axios.post(`${api}/reports`, { UserId: 1 }).then(response => {
       let report: Report = {
-        id: response.data.id,
-        UserId: response.data.UserId,
-        createdAt: response.data.createdAt,
-        updatedAt: response.data.updatedAt,
+        id: response.data.report.id,
+        UserId: response.data.report.UserId,
+        createdAt: response.data.report.createdAt,
+        updatedAt: response.data.report.updatedAt,
       }
       setActiveReport!(report);
     }).catch((error) => {
@@ -43,10 +43,10 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
   const updateReport = useCallback((): void => {
     axios.put(`${api}/reports/${activeReport!.id}`, { UserId: 1 }).then(response => {
       let report: Report = {
-        id: response.data.id,
-        UserId: response.data.UserId,
-        createdAt: response.data.createdAt,
-        updatedAt: response.data.updatedAt,
+        id: response.data.report.id,
+        UserId: response.data.report.UserId,
+        createdAt: response.data.report.createdAt,
+        updatedAt: response.data.report.updatedAt,
       }
       /* 
         When We Reload Page Report Will Exist In Array So We Don't Need to Add It Again, We Just Need To Update It

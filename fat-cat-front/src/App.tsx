@@ -42,7 +42,7 @@ function App() {
   const getReports = useCallback((): void => {
     axios.get(`${api}/users/1/reports?days=2`).then(res => {
       let reportsG: Report[] = [];
-      res.data.forEach((report: Report): void => {
+      res.data.reports.forEach((report: Report): void => {
         let reportG = {
           id: report.id,
           UserId: report.UserId,
@@ -63,7 +63,7 @@ function App() {
     // Get All Reports For User
     axios.get(`${api}/users/1/reports`).then(res => {
       let reportsG: Report[] = [];
-      res.data.forEach((report: Report): void => {
+      res.data.reports.forEach((report: Report): void => {
         let reportG = {
           id: report.id,
           UserId: report.UserId,

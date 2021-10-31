@@ -7,10 +7,10 @@ const Op = db.Sequelize.Op;
 exports.create = (req, res) => {
   // Validate request
   if (!req.body.UserId) {
-    res.status(400).send({
-      message: "User not found."
+    return res.status(400).json({
+      message: "User not found.",
+      report: null,
     });
-    return;
   }
 
   const report = {
@@ -21,12 +21,14 @@ exports.create = (req, res) => {
 
   Report.create(report)
     .then(data => {
-      res.send(data);
+      return res.status(200).json({
+        report: data,
+        message: 'Report created',
+      });
     })
     .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the Report."
+      return res.status(500).json({
+        message: err.message || "Some error occurred while creating the Report."
       });
     });
 };
@@ -36,12 +38,11 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
   Report.findAll()
     .then(data => {
-      res.send(data);
+      return res.status(200).json({ reports: data, message: 'Reports found' });
     })
     .catch(err => {
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving reports."
+      return res.status(500).json({
+        message: err.message || "Some error occurred while retrieving reports."
       });
     });
 };
@@ -56,13 +57,23 @@ exports.findOne = (req, res) => {
 exports.update = async (req, res) => {
   const id = req.params.id;
 
-  const report = await Report.findOne({ where: { id: id } });
-  if (report === null) {
-    res.send('Report not found');
-  }
+  try {
+    const report = await Report.findOne({ where: { id: id } });
+    if (report === null) {
+      return res.status(500).json({
+        message: "Not found",
+        report: null
+      });
+    }
 
-  report.changed('updatedAt', true);
-  report.save();
-  res.send(report);
+    report.changed('updatedAt', true);
+    report.save();
+    res.status(200).json({ report, message: "Report updated" });
+  } catch (err) {
+    return res.status(500).json({
+      message: err.message,
+      report: null
+    });
+  }
 };
 // Update Report =============================================================================
