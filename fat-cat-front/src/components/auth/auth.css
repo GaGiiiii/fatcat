@@ -82,3 +82,7 @@
 .auth-form .auth-success input {
   border-bottom-color: #06c081;
 }
+
+.auth-form .agree-text{
+  font-size: 12px;
+}

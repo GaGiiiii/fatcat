@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-d
 import "bootswatch/dist/sandstone/bootstrap.min.css";
 import Home from './components/home/Home';
 import Reports from './components/reports/Reports';
-import Login from './components/login/Login';
+import Auth from './components/auth/Auth';
 import axios from 'axios';
 import { isLoggedIn, totalTimeSpentToday } from './Helpers';
 
@@ -133,7 +133,10 @@ function App() {
                 {currentUser ? <Reports reports={reports} /> : <Redirect to='/login' />}
               </Route>
               <Route path="/login">
-                {!currentUser ? <Login /> : <Redirect to='/' />}
+                {!currentUser ? <Auth /> : <Redirect to='/' />}
+              </Route>
+              <Route path="/register">
+                {!currentUser ? <Auth /> : <Redirect to='/' />}
               </Route>
               <Route path="/">
                 {currentUser ? <Home reports={reports} setReports={setReports} activeReport={activeReport} setActiveReport={setActiveReport} /> : <Redirect to='/login' />}
