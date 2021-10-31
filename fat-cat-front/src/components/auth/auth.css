@@ -83,6 +83,10 @@
   border-bottom-color: #06c081;
 }
 
-.auth-form .agree-text{
+.auth-form .agree-text {
   font-size: 12px;
+}
+
+.su-span:hover {
+  cursor: pointer;
 }
