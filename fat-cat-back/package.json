@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "dev": "nodemon -L"
+    "dev": "nodemon -L",
+    "deploy": "docker image build -t gagiiiii/fat-cat-back . && docker image push gagiiiii/fat-cat-back"
   },
   "author": "GaGiiiii",
   "license": "ISC",
