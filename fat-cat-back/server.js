@@ -26,6 +26,7 @@ require('./app/routes/user.routes')(app);
 // Routes ================================================================================
 
 console.log(process.env.DB_HOST)
+console.log(process.env.DB_HOST)
 
 // Start App =============================================================================
 const PORT = process.env.PORT || 8000;

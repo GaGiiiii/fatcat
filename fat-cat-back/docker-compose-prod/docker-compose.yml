@@ -1,0 +1,13 @@
+version: "3.9"
+
+services:
+  web-server:
+    image: gagiiiii/fat-cat-back
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      - DB_HOST=remotemysql.com
+      - DB_USER=EXalnYXJ4m
+      - DB_PASSWORD=QhuLsEwcFF
+      - DB_NAME=EXalnYXJ4m
