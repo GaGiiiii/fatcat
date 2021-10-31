@@ -42,13 +42,26 @@
 
 .auth-form button {
   text-transform: uppercase;
-  color: white;
   letter-spacing: 1.5px;
-  background-color: #086646;
+  color: white;
+  background-color: rgba(6, 195, 131, 255);
   border: none;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  padding-top: 12px;
+  padding-bottom: 12px;
   border-radius: 10px;
+  box-shadow: none;
+  border: none;
+}
+
+.auth-form button:hover, .auth-form button:active, .auth-form button:focus {
+  color: white;
+  background-color: rgba(8, 102, 70, 255);
+  box-shadow: none;
+  border: none;
+}
+
+.btn-check:active+.btn-primary:focus, .btn-check:checked+.btn-primary:focus, .btn-primary.active:focus, .btn-primary:active:focus, .show>.btn-primary.dropdown-toggle:focus {
+  box-shadow: none;
 }
 
 .auth-form .su-span {

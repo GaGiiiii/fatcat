@@ -21,9 +21,6 @@ const Login: React.FC = () => {
     event.preventDefault();
     console.log(email);
   }
-  function emailFocus(event: React.FormEvent) {
-    console.log(email);
-  }
 
   useEffect(() => {
     if (email !== '') {

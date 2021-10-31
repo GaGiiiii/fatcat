@@ -14,18 +14,18 @@
 
 .reports-btn {
   color: white;
-  background-color: gray;
+  background-color: rgba(169, 169, 169, 255);
   border: none;
 }
 
 .clock-in-btn {
   color: white;
-  background-color: #41c468;
+  background-color: rgba(6, 195, 131, 255);
 }
 
 .reports-btn:active, .reports-btn:focus, .reports-btn:hover {
   color: black;
-  background-color: rgb(204, 204, 204);
+  background-color: rgba(231, 231, 231, 255);
 }
 
 .help-text {
@@ -35,23 +35,23 @@
 
 .clock-in-btn:active, .clock-in-btn:focus, .clock-in-btn:hover {
   color: white;
-  background-color: rgb(14, 105, 2);
+  background-color: rgba(8, 102, 70, 255);
 }
 
 .active-clock {
-  color: #41c468 !important;
-  background-color: rgb(49, 49, 44) !important;
+  color: rgba(6, 195, 131, 255) !important;
+  background-color: rgba(82, 82, 82, 255) !important;
 }
 
 .active-clock:hover {
-  background-color: #df4759 !important;
+  background-color: rgba(235, 99, 99, 255) !important;
   color: white !important;
 }
 
 .red {
-  color: red !important;
+  color: rgba(235, 99, 99, 255) !important;
 }
 
-.total-time{
+.total-time {
   font-weight: 500;
 }
