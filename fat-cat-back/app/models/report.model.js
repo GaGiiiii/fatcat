@@ -1,5 +1,5 @@
 module.exports = (sequelize, Sequelize) => {
-  const Report = sequelize.define("Report", {
+  const Report = sequelize.define("report", {
     date: {
       type: Sequelize.DATE
     },

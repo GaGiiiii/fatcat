@@ -16,7 +16,7 @@ exports.getReports = (req, res) => {
     // console.log(authData.user);
 
     if (req.query.days) {
-      sequelize.query(`SELECT * FROM reports r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -${req.query.days} DAY) AND UserId = 1 ORDER BY createdAt ASC`, null, { raw: true }).then(data => {
+      sequelize.query(`SELECT * FROM reports r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -${req.query.days} DAY) AND userId = ${authData.user.id} AND r.createdAt != r.updatedAt ORDER BY createdAt ASC`, null, { raw: true }).then(data => {
         return res.status(200).json({
           reports: data[0],
           message: "Reports found"
@@ -27,7 +27,7 @@ exports.getReports = (req, res) => {
         });
       });
     } else {
-      sequelize.query('SELECT * FROM `reports` r WHERE UserId = 1 ORDER BY createdAt ASC', null, { raw: true }).then(data => {
+      sequelize.query(`SELECT * FROM reports r WHERE userId = ${authData.user.id} ORDER BY createdAt ASC`, null, { raw: true }).then(data => {
         return res.status(200).json({
           reports: data[0],
           message: "Reports found"

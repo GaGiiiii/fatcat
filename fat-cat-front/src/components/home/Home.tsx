@@ -28,6 +28,7 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
   }, [TimerContextVar.setIntervalID, TimerContextVar.setTimeSpent]);
 
   const saveReport = useCallback((): void => {
+    console.log(currentUser!.id);
     axios.post(`${api}/reports`, { UserId: currentUser!.id }, {
       headers: {
         Authorization: `Bearer ${currentUser!.token}`

@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
+const env = require('dotenv');
+env.config();
 const db = require('./app/models');
 
 var corsOptions = {
@@ -23,6 +25,7 @@ require('./app/routes/report.routes')(app);
 require('./app/routes/user.routes')(app);
 // Routes ================================================================================
 
+console.log(process.env.DB_HOST)
 
 // Start App =============================================================================
 const PORT = process.env.PORT || 8000;

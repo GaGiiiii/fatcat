@@ -14,7 +14,7 @@ exports.create = (req, res) => {
   }
 
   const report = {
-    UserId: req.body.UserId,
+    userId: req.body.UserId,
     date: new Date().toLocaleString('en-US', { timeZone: 'Europe/Belgrade' }), // Should be removed, we have created_at
     // date: new Date(),
   };
