@@ -10,29 +10,43 @@ const jwt = require('jsonwebtoken');
 If days query param is provided we will return reports from last x days, if not we will return all reports
 */
 exports.getReports = (req, res) => {
-  if (req.query.days) {
-    sequelize.query(`SELECT * FROM reports r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -${req.query.days} DAY) AND UserId = 1 ORDER BY createdAt ASC`, null, { raw: true }).then(data => {
-      return res.status(200).json({
-        reports: data[0],
-        message: "Reports found"
+
+  try {
+    const authData = jwt.verify(req.token, 'secretkey');
+    // console.log(authData.user);
+
+    if (req.query.days) {
+      sequelize.query(`SELECT * FROM reports r WHERE r.createdAt >= DATE_ADD(CURDATE(), INTERVAL -${req.query.days} DAY) AND UserId = 1 ORDER BY createdAt ASC`, null, { raw: true }).then(data => {
+        return res.status(200).json({
+          reports: data[0],
+          message: "Reports found"
+        });
+      }).catch(err => {
+        return res.status(500).json({
+          message: err.message || "Some error occurred while retrieving reports."
+        });
       });
-    }).catch(err => {
-      return res.status(500).json({
-        message: err.message || "Some error occurred while retrieving reports."
+    } else {
+      sequelize.query('SELECT * FROM `reports` r WHERE UserId = 1 ORDER BY createdAt ASC', null, { raw: true }).then(data => {
+        return res.status(200).json({
+          reports: data[0],
+          message: "Reports found"
+        });
+      }).catch(err => {
+        res.status(500).json({
+          message: err.message || "Some error occurred while retrieving reports."
+        });
       });
-    });
-  } else {
-    sequelize.query('SELECT * FROM `reports` r WHERE UserId = 1 ORDER BY createdAt ASC', null, { raw: true }).then(data => {
-      return res.status(200).json({
-        reports: data[0],
-        message: "Reports found"
-      });
-    }).catch(err => {
-      res.status(500).json({
-        message: err.message || "Some error occurred while retrieving reports."
-      });
-    });
+    }
+
+  } catch (error) {
+    res.status(401).json({
+      message: 'Unauthorized',
+      reports: null,
+    })
   }
+
+
 };
 // getReports =============================================================================
 
@@ -57,7 +71,7 @@ exports.login = async (req, res) => {
     }))[0];
 
     if (user) {
-      const token = jwt.sign({ user }, 'secretkey');
+      const token = jwt.sign({ user }, 'secretkey', {expiresIn: '1 day'});
       res.status(200).json({
         user,
         token,
