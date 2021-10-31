@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Oct 31, 2021 at 06:06 PM
--- Server version: 10.4.18-MariaDB
--- PHP Version: 8.0.3
+-- Host: localhost
+-- Generation Time: Oct 31, 2021 at 06:43 PM
+-- Server version: 8.0.13-4
+-- PHP Version: 7.2.24-0ubuntu0.18.04.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `fatcatdb`
+-- Database: `EXalnYXJ4m`
 --
 
 -- --------------------------------------------------------
@@ -32,18 +33,15 @@ CREATE TABLE `reports` (
   `date` datetime DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL,
-  `UserId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `userId` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `reports`
 --
 
-INSERT INTO `reports` (`id`, `date`, `createdAt`, `updatedAt`, `UserId`) VALUES
-(1, '2021-10-31 15:53:41', '2021-10-31 15:53:41', '2021-10-31 15:53:43', 1),
-(2, '2021-10-31 18:22:53', '2021-10-31 18:22:53', '2021-10-31 18:23:01', 1),
-(3, '2021-10-31 18:23:06', '2021-10-31 18:23:06', '2021-10-31 18:23:18', 1),
-(4, '2021-10-31 18:26:07', '2021-10-31 18:26:07', '2021-10-31 18:28:37', 1);
+INSERT INTO `reports` (`id`, `date`, `createdAt`, `updatedAt`, `userId`) VALUES
+(1, '2021-10-31 21:38:54', '2021-10-31 21:38:54', '2021-10-31 21:40:05', 1);
 
 -- --------------------------------------------------------
 
@@ -53,19 +51,19 @@ INSERT INTO `reports` (`id`, `date`, `createdAt`, `updatedAt`, `UserId`) VALUES
 
 CREATE TABLE `users` (
   `id` int(11) NOT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `fullname` varchar(255) DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `fullname` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `createdAt` datetime NOT NULL,
   `updatedAt` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `fullname`, `createdAt`, `updatedAt`) VALUES
-(1, 'gagi@gagi.com', 'gagii', 'gagi gagic', '2021-10-31 14:40:18', '2021-10-31 14:40:18');
+(1, 'gagi@gagi.com', '$2b$10$1nmbc2a5cbnWsK.iCDilSu87xafnnJYMgS7BPrIKIANeEpPmLOq3i', 'Dragoslav Jankovic', '2021-10-31 21:38:45', '2021-10-31 21:38:45');
 
 --
 -- Indexes for dumped tables
@@ -76,7 +74,7 @@ INSERT INTO `users` (`id`, `email`, `password`, `fullname`, `createdAt`, `update
 --
 ALTER TABLE `reports`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `UserId` (`UserId`);
+  ADD KEY `userId` (`userId`);
 
 --
 -- Indexes for table `users`
@@ -92,7 +90,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `reports`
 --
 ALTER TABLE `reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -108,7 +106,7 @@ ALTER TABLE `users`
 -- Constraints for table `reports`
 --
 ALTER TABLE `reports`
-  ADD CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
+  ADD CONSTRAINT `reports_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

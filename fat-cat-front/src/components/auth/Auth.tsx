@@ -51,23 +51,22 @@ const Login: React.FC = () => {
   }
 
   function handleRegister(event: React.FormEvent) {
-    console.log("Register");
     event.preventDefault();
-    // axios.post(`${api}/login`, { email, password }).then(response => {
-    //   console.log(response);
-    //   let user: User = {
-    //     id: response.data.user.id,
-    //     fullname: response.data.user.fullname,
-    //     email: response.data.user.email,
-    //     token: response.data.token,
-    //   };
-    //   login(user); // Add User to Local Storage
-    //   setCurrentUser!(user); // Set Global State
-    //   history.push('/'); // Redirect
-    // }).catch((error) => {
-    //   console.log(error);
-    //   setWrongCombination(true);
-    // });
+    axios.post(`${api}/register`, { email, password, fullname: fullName }).then(response => {
+      console.log(response);
+      let user: User = {
+        id: response.data.user.id,
+        fullname: response.data.user.fullname,
+        email: response.data.user.email,
+        token: response.data.token,
+      };
+      login(user); // Add User to Local Storage
+      setCurrentUser!(user); // Set Global State
+      history.push('/'); // Redirect
+    }).catch((error) => {
+      console.log(error);
+      setWrongCombination(true);
+    });
   }
 
   useEffect(() => {

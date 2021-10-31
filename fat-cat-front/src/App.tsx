@@ -55,6 +55,7 @@ function App() {
   /* Calling API To Get Reports For Last x Days */
   const getReports = useCallback((): void => {
     if (currentUser) {
+      console.log(currentUser);
       axios.get(`${api}/users/${currentUser.id}/reports?days=2`, {
         headers: {
           Authorization: `Bearer ${currentUser.token}`
