@@ -1,11 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Col, Container, Row, Button, Form } from 'react-bootstrap'
 import axios from 'axios';
 import { HeaderAuth } from '../header/HeaderAuth';
 import './login.css';
-import { validateEmail } from '../../Helpers';
+import { login, validateEmail } from '../../Helpers';
+import { ApiContext, CurrentUserContext, User } from '../../App';
+import { useHistory } from 'react-router-dom';
 
 const Login: React.FC = () => {
+  let history = useHistory();
   /* In the future we should divide email & pass in their own INPUT COMPONENTS!!! */
   const [email, setEmail] = useState<String>("");
   const [password, setPassword] = useState<String>("");
@@ -16,10 +19,26 @@ const Login: React.FC = () => {
   const [passwordError, setPasswordError] = useState<boolean>(false);
   const [passwordColor, setPasswordColor] = useState<String>("");
 
+  const api = useContext(ApiContext);
+  const { setCurrentUser } = useContext(CurrentUserContext);
 
   function handleLogin(event: React.FormEvent) {
+    console.log("A");
     event.preventDefault();
-    console.log(email);
+    axios.post(`${api}/login`, { email, password }).then(response => {
+      console.log(response);
+      let user: User = {
+        id: response.data.user.id,
+        fullname: response.data.user.fullname,
+        email: response.data.user.email,
+        token: response.data.token,
+      };
+      login(user); // Add User to Local Storage
+      setCurrentUser!(user); // Set Global State
+      history.push('/'); // Redirect
+    }).catch((error) => {
+      console.log(error);
+    });
   }
 
   useEffect(() => {
@@ -39,7 +58,7 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (password !== '') {
-      if (!(password.length > 5)) {
+      if (!(password.length >= 5)) {
         setPasswordError(true);
         setPasswordColor("auth-error");
       } else {

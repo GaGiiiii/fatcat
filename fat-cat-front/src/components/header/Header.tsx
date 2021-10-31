@@ -2,18 +2,23 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Container } from 'react-bootstrap';
 import hero from '../../images/hero.png'; // with import
 import heroActive from '../../images/hero-active.png'; // with import
-import { TimerContext } from '../../App';
+import { CurrentUserContext, TimerContext } from '../../App';
 import { FaArrowLeft } from "react-icons/fa";
 import './header.css';
 import { Link } from 'react-router-dom';
+import { GiExitDoor } from 'react-icons/gi';
+import { logout } from '../../Helpers';
+import { useHistory } from 'react-router-dom';
 
 interface Props {
   currentPage: string
 }
 
 export const Header: React.FC<Props> = ({ currentPage }) => {
+  let history = useHistory();
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const TimerContextVar = useContext(TimerContext);
+  const { setCurrentUser } = useContext(CurrentUserContext);
 
   /* Clock */
   useEffect(() => {
@@ -25,6 +30,12 @@ export const Header: React.FC<Props> = ({ currentPage }) => {
     }
   }, []);
 
+  function handleLogout() {
+    logout();
+    setCurrentUser!(null);
+    history.push('/login');
+  }
+
   return (
     <>
       <div style={{ position: 'relative' }}>
@@ -33,6 +44,9 @@ export const Header: React.FC<Props> = ({ currentPage }) => {
             <FaArrowLeft />
           </Link>
         </div>}
+        <div className='logout-doors' onClick={handleLogout}>
+          <GiExitDoor />
+        </div>
         <img className='w-100' src={TimerContextVar.clockActive ? heroActive : hero} alt="" />
       </div>
       <Container className='mt-5'>

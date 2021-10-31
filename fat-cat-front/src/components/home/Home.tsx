@@ -5,7 +5,7 @@ import Timer from './Timer';
 import { getHoursG, getMinutesG } from '../../Helpers';
 import { Header } from '../header/Header';
 import { Link } from 'react-router-dom';
-import { ApiContext, Report, TimerContext } from '../../App';
+import { ApiContext, CurrentUserContext, Report, TimerContext } from '../../App';
 import axios from 'axios';
 
 interface Props {
@@ -18,6 +18,7 @@ interface Props {
 const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveReport }) => {
   const TimerContextVar = useContext(TimerContext);
   const api = useContext(ApiContext);
+  const { currentUser } = useContext(CurrentUserContext);
 
   const startTimer = useCallback((): void => {
     let intervalIDParam: number = window.setInterval(() => {
@@ -27,7 +28,11 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
   }, [TimerContextVar.setIntervalID, TimerContextVar.setTimeSpent]);
 
   const saveReport = useCallback((): void => {
-    axios.post(`${api}/reports`, { UserId: 1 }).then(response => {
+    axios.post(`${api}/reports`, { UserId: currentUser!.id }, {
+      headers: {
+        Authorization: `Bearer ${currentUser!.token}`
+      }
+    }).then(response => {
       let report: Report = {
         id: response.data.report.id,
         UserId: response.data.report.UserId,
@@ -38,10 +43,14 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
     }).catch((error) => {
       console.log(error);
     });
-  }, [api, setActiveReport]);
+  }, [api, setActiveReport, currentUser]);
 
   const updateReport = useCallback((): void => {
-    axios.put(`${api}/reports/${activeReport!.id}`, { UserId: 1 }).then(response => {
+    axios.put(`${api}/reports/${activeReport!.id}`, { UserId: currentUser!.id }, {
+      headers: {
+        Authorization: `Bearer ${currentUser!.token}`
+      }
+    }).then(response => {
       let report: Report = {
         id: response.data.report.id,
         UserId: response.data.report.UserId,
@@ -65,7 +74,7 @@ const Home: React.FC<Props> = ({ reports, setReports, activeReport, setActiveRep
     }).catch((error) => {
       console.log(error);
     });
-  }, [TimerContextVar.intervalID, TimerContextVar.setTimeSpent, TimerContextVar.setTotalTimeSpent, TimerContextVar.timeSpent, activeReport, api, reports, setReports]);
+  }, [TimerContextVar.intervalID, TimerContextVar.setTimeSpent, TimerContextVar.setTotalTimeSpent, TimerContextVar.timeSpent, activeReport, api, reports, setReports, currentUser]);
 
   function handleClockIn(): void {
     if (!TimerContextVar.clockActive) {

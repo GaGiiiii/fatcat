@@ -71,8 +71,9 @@ exports.login = async (req, res) => {
     }))[0];
 
     if (user) {
-      const token = jwt.sign({ user }, 'secretkey', {expiresIn: '1 day'});
-      res.status(200).json({
+      const token = jwt.sign({ user }, 'secretkey'); // Todo Expire Token
+      user.password = null;
+      return res.status(200).json({
         user,
         token,
         message: 'Login Success'
@@ -92,3 +93,20 @@ exports.login = async (req, res) => {
 };
 // login =============================================================================
 
+// isLoggedIn =============================================================================
+exports.isLoggedIn = async (req, res) => {
+  try {
+    const authData = jwt.verify(req.token, 'secretkey');
+    authData.user.password = null;
+    return res.status(200).json({
+      message: 'User is logged in',
+      user: authData.user
+    });
+  } catch (error) {
+    return res.status(401).json({
+      message: 'Unauthenticated',
+      user: null
+    });
+  }
+};
+// isLoggedIn =============================================================================

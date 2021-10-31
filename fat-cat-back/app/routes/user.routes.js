@@ -7,5 +7,8 @@ module.exports = app => {
   // Get Reports For User
   router.get("/:id/reports", verifyToken, users.getReports);
 
+  // Is Logged In
+  router.post("/:id/loggedIn", verifyToken, users.isLoggedIn);
+
   app.use('/api/users', router);
 };

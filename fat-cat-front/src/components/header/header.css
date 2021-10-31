@@ -9,3 +9,18 @@
 .arrow-back a:hover {
   color: #41c468 !important;
 }
+
+.logout-doors {
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: white !important;
+  font-size: 25px;
+  text-decoration: none;
+}
+
+.logout-doors:hover {
+  color: #41c468 !important;
+  cursor: pointer;
+}
